@@ -35,18 +35,10 @@ app.get('/todos', (req, res) => {
 app.get('/todos/:id', (req, res) => {
   var id = req.params.id;
 
-  // Valid id using ObjectID
-    // 404 - send back empty body
   if (!ObjectID.isValid(id)) {
     return res.sendStatus(404).send();
   }
 
-  // findById - todos
-    // success
-      // if todo - send it back
-      // if no todo - send back 400 - empty body
-    // error
-      // 400, and send empty body back
   Todo.findById(id).then((todo) => {
     if (!todo) {
       return res.sendStatus(404).send();
@@ -56,6 +48,25 @@ app.get('/todos/:id', (req, res) => {
   }).catch((e) => {
     res.sendStatus(404).send()
   })
+});
+
+app.delete('/todos/:id', (req, res) => {
+  // get the id
+  var id = req.params.id;
+
+  if (!ObjectID.isValid(id)) {
+    return res.sendStatus(404).send();
+  }
+
+  Todo.findByIdAndRemove(id).then((todo) => {
+    if (!todo) {
+      return res.sendStatus(404).send();
+    }
+
+    res.send(todo);
+  }).catch((e) => {
+    res.sendStatus(400).send();
+  });
 });
 
 app.listen(port, () => {
