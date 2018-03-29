@@ -49,12 +49,12 @@ app.get('/todos/:id', (req, res) => {
       // 400, and send empty body back
   Todo.findById(id).then((todo) => {
     if (!todo) {
-      return res.sendStatus(400).send();
+      return res.sendStatus(404).send();
     }
 
     res.send({todo});
   }).catch((e) => {
-    res.sendStatus(400).send()
+    res.sendStatus(404).send()
   })
 });
 
