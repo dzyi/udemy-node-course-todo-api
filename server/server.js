@@ -22,8 +22,8 @@ app.post('/todos', (req, res) => {
 
   todo.save().then((doc) => {
     res.send(doc);
-  }, (e) => {
-    res.sendStatus(400).send(e);
+  }).catch((e) => {
+    res.sendStatus(400).send();
   });
 });
 
@@ -111,7 +111,7 @@ app.post('/users', (req, res) => {
   }).then((token) => {
     res.header('x-auth', token).send(user);
   }).catch((e) => {
-    res.sendStatus(400).send(e);
+    res.sendStatus(400).send();
   })
 });
 
